@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 22:04:23 by rdcm              #+#    #+#             */
-/*   Updated: 2025/11/27 23:04:58 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/11/29 16:02:33 by rida-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ char	*convert_to_binary(int number)
 int	convert_to_integer(char	*b)
 {
 	int	i;
-	int j;
+	int	j;
 	int	nb;
-	
+
 	i = 0;
 	j = 128;
 	nb = 0;
