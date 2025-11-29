@@ -6,43 +6,12 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 22:04:23 by rdcm              #+#    #+#             */
-/*   Updated: 2025/11/26 23:15:35 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/11/27 23:04:58 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-
-void	convert_to_binary(int number, int *b)
-{
-	int	i;
-
-	i = 7;
-	while (number > 0)
-	{
-		b[i] = (number % 2);
-		number = number / 2;
-		i--;
-	}
-}
-
-int	convert_to_integer(int	*b)
-{
-	int	i;
-	int j;
-	int	nb;
-	
-	i = 0;
-	j = 128; //1 2 4 8 16 32 64 128
-	nb = 0;
-	while (i < 8)
-	{
-		nb = j * b[i] + nb;
-		//printf("j:%d e i:%d e nb:%d\n", j, i, nb);
-		i++;
-		j = j / 2;
-	}
-	return (nb);
-}
+#include <stdlib.h>
 
 void	*ft_memset(void *s, int c, size_t n)
 {
@@ -57,6 +26,41 @@ void	*ft_memset(void *s, int c, size_t n)
 		i++;
 	}
 	return (s);
+}
+
+char	*convert_to_binary(int number)
+{
+	int		i;
+	char	*b;
+
+	b = malloc(sizeof(char) * 8);
+	ft_memset(b, 0, sizeof(b));
+	i = 7;
+	while (number > 0)
+	{
+		b[i] = (number % 2);
+		number = number / 2;
+		i--;
+	}
+	return (b);
+}
+
+int	convert_to_integer(char	*b)
+{
+	int	i;
+	int j;
+	int	nb;
+	
+	i = 0;
+	j = 128;
+	nb = 0;
+	while (i < 8)
+	{
+		nb = j * b[i] + nb;
+		i++;
+		j = j / 2;
+	}
+	return (nb);
 }
 
 int     ft_atoi(const char *str)
@@ -86,23 +90,35 @@ int     ft_atoi(const char *str)
         return (nb * sign);
 }
 
-int	main(int argc, char **argv)
+void ft_print_binary(char *b)
 {
-	int	nb;
-	int	b[8];
-	int	i = 7;
-
-	nb = ft_atoi(argv[1]);
-	ft_memset(b, 0, sizeof(b));
-	convert_to_binary(nb, b);
-	printf("\n\n");
-	int j = 0;
+	int j;
+	
+	j = 0;
+	printf("Binary: ");
 	while (j < 8)
 	{
 		printf("%d", b[j]);
 		j++;
 	}
-	printf("\n");
-	printf("\nValor: %d\n", convert_to_integer(b));
+}
+
+int	main(int argc, char **argv)
+{
+	int		nb;
+	char	*b;
+	int		i;
+	char	*name = "Ricardo";
+
+	nb = ft_atoi(argv[1]);
+	i = 0;
+	while (name[i] != '\0')
+	{
+		printf("Caracter: %c	", name[i]);
+		b = convert_to_binary(name[i]);
+		ft_print_binary(b);
+		printf("	Valor: %c	Dec: %d\n", convert_to_integer(b), convert_to_integer(b));
+		i++;
+	}
 	return (0);
 }
