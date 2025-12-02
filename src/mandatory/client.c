@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:53:52 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/11/29 17:53:51 by rida-cos         ###   ########.fr       */
+/*   Updated: 2025/12/02 00:13:05 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	send_message(int pid, char *message)
 		kill(pid, SIGUSR1);
 		usleep(50);
 	}
-	ft_printf("%d", pid);
 }
 
 int	main(int argc, char **argv)

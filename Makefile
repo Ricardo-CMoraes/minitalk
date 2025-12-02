@@ -4,10 +4,10 @@ NAME_SERVER = server
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror -Ilibft -Iincludes
 
-SRC_CLIENT = client.c utils.c
+SRC_CLIENT = src/mandatory/client.c utils.c
 OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 
-SRC_SERVER = server.c utils.c
+SRC_SERVER = src/mandatory/server.c utils.c
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
 
 LIBFT_DIR = libft
