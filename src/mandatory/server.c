@@ -6,7 +6,7 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:34:44 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/02 22:55:50 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/05 00:19:42 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	signal_handler(int signum)
 {
-	static int	counter = 0;
-	char		binary[8];
+	static int		counter = 0;
+	static char		binary[8];
+	char			c;
 
 	if (signum == SIGUSR1)
 		binary[counter] = 0;
@@ -24,7 +25,14 @@ void	signal_handler(int signum)
 	counter++;
 	if (counter == 8)
 	{
-		ft_printf("%c", convert_to_integer(binary));
+		if (convert_to_integer(binary) > 127)
+			write(1, "!", 1);
+		else
+		{
+			c = (char)convert_to_integer(binary);	
+			write(1, &c, 1);
+		}
+		ft_memset(binary, 0, sizeof(binary));
 		counter = 0;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 22:04:23 by rdcm              #+#    #+#             */
-/*   Updated: 2025/11/29 16:02:33 by rida-cos         ###   ########.fr       */
+/*   Updated: 2025/12/04 21:17:14 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	main(int argc, char **argv)
 	char	*name = "Ricardo";
 
 	nb = ft_atoi(argv[1]);
+	if (nb < 0 )
 	i = 0;
 	while (name[i] != '\0')
 	{

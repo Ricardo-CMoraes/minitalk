@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 13:56:37 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/11/29 13:57:41 by rida-cos         ###   ########.fr       */
+/*   Updated: 2025/12/04 21:32:10 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,17 @@ int	convert_to_integer(char	*b)
 		j = j / 2;
 	}
 	return (nb);
+}
+
+void handle_error(const char *msg)
+{
+	ft_printf(msg);
+	exit(EXIT_FAILURE);
+}
+
+void send_bit(int pid, int signal)
+{
+	if (kill(pid, signal) == -1)
+		handle_error("Error: process does not exist\n");
+	usleep(UWAIT);
 }

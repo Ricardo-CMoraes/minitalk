@@ -6,7 +6,7 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:53:52 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/02 23:19:38 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/04 21:30:12 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*convert_to_binary(int number)
 	char	*b;
 
 	b = malloc(sizeof(char) * 8);
+	if (!b)
+		handle_error("Error: memory allocation\n");
 	ft_memset(b, 0, sizeof(b));
 	i = 7;
 	while (number > 0)
@@ -43,10 +45,9 @@ void	send_message(int pid, char *message)
 		while (i < 8)
 		{
 			if (binary[i] == 0)
-				kill(pid, SIGUSR1);
+				send_bit(pid, SIGUSR1);
 			else
-				kill(pid, SIGUSR2);
-			usleep(100);
+				send_bit(pid, SIGUSR2);
 			i++;
 		}
 		free(binary);
@@ -54,10 +55,7 @@ void	send_message(int pid, char *message)
 	}
 	i = 0;
 	while (i++ < 8)
-	{
-		kill(pid, SIGUSR1);
-		usleep(100);
-	}
+		send_bit(pid, SIGUSR1);
 }
 
 int	main(int argc, char **argv)
@@ -66,10 +64,10 @@ int	main(int argc, char **argv)
 	char	*message;
 
 	if (argc != 3)
-		return (1);
+		handle_error("Error: more or less than three arguments\n");
 	pid = ft_atoi(argv[1]);
-	if (!pid)
-		return (1);
+	if (!(pid > 0))
+		handle_error("Error: wrong pid\n");
 	message = argv[2];
 	send_message(pid, message);
 }
