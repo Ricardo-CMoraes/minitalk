@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 11:34:44 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/05 21:31:14 by rdcm             ###   ########.fr       */
+/*   Created: 2025/12/06 18:33:26 by rida-cos          #+#    #+#             */
+/*   Updated: 2025/12/06 19:00:31 by rida-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+static t_state	g_state = {0};
+
 void	signal_handler(int signum)
 {
-	static int		counter = 0;
-	static char		binary[8];
-	char			c;
+	char	c;
 
-	if (signum == SIGUSR1)
-		binary[counter] = 0;
-	else if (signum == SIGUSR2)
-		binary[counter] = 1;
-	counter++;
-	if (counter == 8)
+	g_state.accumulator <<= 1;
+	if (signum == SIGUSR2)
+		g_state.accumulator |= 1;
+	g_state.count++;
+
+	if (g_state.count == 8)
 	{
-		if (convert_to_integer(binary) > 127)
-			write(1, "!", 1);
+		if (g_state.accumulator == 0)
+			write(1, "\n", 1);
 		else
 		{
-			c = (char)convert_to_integer(binary);
+			c = (char)g_state.accumulator;
 			write(1, &c, 1);
 		}
-		ft_memset(binary, 0, sizeof(binary));
-		counter = 0;
+		g_state.accumulator = 0;
+		g_state.count = 0;
 	}
 }
 

@@ -1,32 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 11:58:13 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/06 19:03:26 by rida-cos         ###   ########.fr       */
+/*   Created: 2025/11/29 13:56:37 by rida-cos          #+#    #+#             */
+/*   Updated: 2025/12/06 11:24:22 by rida-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
-# include "libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-# include <signal.h>
+#include "minitalk_bonus.h"
 
-# define UWAIT 150
-
-typedef struct s_state
+int	convert_to_integer(char	*b)
 {
-	int	accumulator;
-	int	count;
-}	t_state;
+	int	i;
+	int	j;
+	int	nb;
 
-int		convert_to_integer(char	*b);
-void	handle_error(const char *msg);
-void	send_bit(int pid, int signal);
+	i = 0;
+	j = 128;
+	nb = 0;
+	while (i < 8)
+	{
+		nb = j * b[i] + nb;
+		i++;
+		j = j / 2;
+	}
+	return (nb);
+}
 
-#endif
+void	handle_error(const char *msg)
+{
+	ft_printf(msg);
+	exit(EXIT_FAILURE);
+}
+
+void	send_bit(int pid, int signal)
+{
+	if (kill(pid, signal) == -1)
+		handle_error("Error: process does not exist\n");
+	usleep(UWAIT);
+}

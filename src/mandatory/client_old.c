@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_bonus.c                                     :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:53:52 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/05 22:19:56 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/05 23:03:08 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-static volatile sig_atomic_t g_ack_received = 0;
 
 char	*convert_to_binary(int number)
 {
@@ -20,6 +18,8 @@ char	*convert_to_binary(int number)
 	char	*b;
 
 	b = malloc(sizeof(char) * 8);
+	if (!b)
+		handle_error("Error: memory allocation\n");
 	ft_memset(b, 0, sizeof(b));
 	i = 7;
 	while (number > 0)
@@ -29,12 +29,6 @@ char	*convert_to_binary(int number)
 		i--;
 	}
 	return (b);
-}
-
-void	ack_handler(int signum)
-{
-	(void)signum;
-	g_ack_received = 1;
 }
 
 void	send_message(int pid, char *message)
@@ -51,61 +45,30 @@ void	send_message(int pid, char *message)
 		while (i < 8)
 		{
 			if (binary[i] == 0)
-			{
-				kill(pid, SIGUSR1);
-			}
+				send_bit(pid, SIGUSR1);
 			else
-			{
-				kill(pid, SIGUSR2);
-			}
+				send_bit(pid, SIGUSR2);
 			i++;
 		}
-		ft_printf("%c", convert_to_integer(binary));
 		free(binary);
 		j++;
-		g_ack_received = 0;
-		while (g_ack_received == 0)
-			pause();
 	}
 	i = 0;
 	while (i++ < 8)
-	{
-		kill(pid, SIGUSR1);
-
-	}
-	ft_printf("%d", pid);
-}
-
-void	send_pid(int server_pid)
-{
-    if (kill(server_pid, SIGUSR2) == -1)
-    {
-        ft_putstr_fd("Erro: Não foi possível enviar o sinal inicial para o PID do servidor.\n", 2);
-        exit(EXIT_FAILURE);
-    }
+		send_bit(pid, SIGUSR1);
 }
 
 int	main(int argc, char **argv)
 {
 	int		pid;
 	char	*message;
-	struct sigaction	signal_ack;
 
 	if (argc != 3)
-		return (1);
+		handle_error("Error: more or less than three arguments\n");
 	pid = ft_atoi(argv[1]);
-	if (!pid)
-		return (1);
+	if (!(pid > 0))
+		handle_error("Error: wrong pid\n");
 	message = argv[2];
-	signal_ack.sa_handler = ack_handler;
-	sigemptyset(&signal_ack.sa_mask);
-	signal_ack.sa_flags = 0;
-	if (sigaction(SIGUSR1, &signal_ack, NULL) == -1)
-	{
-		ft_putstr_fd("Erro ao configurar o handler de ACK.\n", 2);
-		return (1);
-	}
-	send_pid(pid);
 	send_message(pid, message);
-	ft_printf("\n");
+	return (0);
 }

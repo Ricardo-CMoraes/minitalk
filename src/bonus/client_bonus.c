@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:53:52 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/05 23:45:42 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/06 12:06:18 by rida-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static volatile sig_atomic_t g_ack_received = 0;
 
@@ -48,29 +48,31 @@ void	send_message(int pid, char *message)
 	j = 0;
 	while (message[j])
 	{
+		ft_printf("\n");
 		binary = convert_to_binary(message[j]);
 		i = 0;
 		while (i < 8)
 		{
 			if (binary[i] == 0)
-				send_bit(pid, SIGUSR1);
+			{
+				ft_printf("0");
+				send_bit_and_wait(pid, SIGUSR1);
+			}
 			else
-				send_bit(pid, SIGUSR2);
+			{
+				ft_printf("1");
+				send_bit_and_wait(pid, SIGUSR2);
+			}
 			i++;
 		}
 		free(binary);
 		j++;
-		g_ack_received = 0;
-		while (g_ack_received == 0)
-			pause();
 	}
 	i = 0;
 	while (i++ < 8)
 	{
-		send_bit(pid, SIGUSR1);
-		g_ack_received = 0;
-		while (g_ack_received == 0)
-			pause(); 
+		send_bit_and_wait(pid, SIGUSR1);
+		ft_printf("0");
 	}
 }
 
@@ -83,11 +85,20 @@ void	send_pid(int server_pid)
 		pause();
 }
 
+void	send_bit_and_wait(int pid, int signal)
+{
+	if (kill(pid, signal) == -1)
+		handle_error("Error: process does not exist or invalid pid\n");
+	g_ack_received = 0;
+	while (g_ack_received == 0)
+		pause();
+}
+
 int	main(int argc, char **argv)
 {
-	int				pid;
-	char			*message;
-	struct sigaction signal_ack;
+	int					pid;
+	char				*message;
+	struct sigaction	signal_ack;
 
 	if (argc != 3)
 		handle_error("Error: more or less than three arguments\n");

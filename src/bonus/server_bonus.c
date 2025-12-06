@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:34:44 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/06 00:16:26 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/06 12:14:30 by rida-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static int g_client_pid = 0;
 
@@ -20,6 +20,9 @@ void	signal_handler(int signum)
 	static char		binary[8];
 	char			c;
 
+	if (g_client_pid != 0)
+		kill(g_client_pid, SIGUSR1);
+	usleep(10);
 	if (signum == SIGUSR1)
 		binary[counter] = 0;
 	else if (signum == SIGUSR2)
@@ -36,11 +39,6 @@ void	signal_handler(int signum)
 		}
 		ft_memset(binary, 0, sizeof(binary));
 		counter = 0;
-		if (g_client_pid != 0)
-		{
-			ft_printf("Checkpoint: %d", g_client_pid);
-			kill(g_client_pid, SIGUSR1);
-		}
 	}
 }
 

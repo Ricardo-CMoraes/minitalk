@@ -3,59 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 11:53:52 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/05 23:03:08 by rdcm             ###   ########.fr       */
+/*   Created: 2025/12/06 17:58:06 by rida-cos          #+#    #+#             */
+/*   Updated: 2025/12/06 19:03:17 by rida-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-char	*convert_to_binary(int number)
+void	ft_send_bits(int pid, char i)
 {
-	int		i;
-	char	*b;
+	int	bit;
 
-	b = malloc(sizeof(char) * 8);
-	if (!b)
-		handle_error("Error: memory allocation\n");
-	ft_memset(b, 0, sizeof(b));
-	i = 7;
-	while (number > 0)
+	bit = 7;
+	while (bit >= 0)
 	{
-		b[i] = (number % 2);
-		number = number / 2;
-		i--;
+		if ((i >> bit) & 1)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		usleep(UWAIT);
+		bit--;
 	}
-	return (b);
 }
 
 void	send_message(int pid, char *message)
 {
-	char	*binary;
-	int		i;
-	int		j;
+	int	i;
 
-	j = 0;
-	while (message[j])
-	{
-		binary = convert_to_binary(message[j]);
-		i = 0;
-		while (i < 8)
-		{
-			if (binary[i] == 0)
-				send_bit(pid, SIGUSR1);
-			else
-				send_bit(pid, SIGUSR2);
-			i++;
-		}
-		free(binary);
-		j++;
-	}
 	i = 0;
-	while (i++ < 8)
-		send_bit(pid, SIGUSR1);
+	while (message[i] != '\0')
+	{
+		ft_send_bits(pid, message[i]);
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)
