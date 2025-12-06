@@ -6,7 +6,7 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:58:13 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/04 23:13:29 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/05 21:25:11 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <signal.h>
 
-# define UWAIT 300
+# define UWAIT 375
 
 int		convert_to_integer(char	*b);
 void	handle_error(const char *msg);

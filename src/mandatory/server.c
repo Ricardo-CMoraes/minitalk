@@ -6,7 +6,7 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:34:44 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/05 00:19:42 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/05 21:31:14 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	signal_handler(int signum)
 			write(1, "!", 1);
 		else
 		{
-			c = (char)convert_to_integer(binary);	
+			c = (char)convert_to_integer(binary);
 			write(1, &c, 1);
 		}
 		ft_memset(binary, 0, sizeof(binary));

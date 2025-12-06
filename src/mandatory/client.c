@@ -6,7 +6,7 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:53:52 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/04 21:30:12 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/05 23:03:08 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ int	main(int argc, char **argv)
 		handle_error("Error: wrong pid\n");
 	message = argv[2];
 	send_message(pid, message);
+	return (0);
 }
