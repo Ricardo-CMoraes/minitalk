@@ -6,7 +6,7 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:58:13 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/07 19:46:57 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/07 20:30:34 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 
 typedef struct s_state
 {
-	int	accumulator;
-	int	count;
-	pid_t pid;
+	int		accumulator;
+	int		count;
+	pid_t	pid;
 }	t_state;
 
 void	handle_error(const char *msg);

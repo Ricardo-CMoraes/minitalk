@@ -6,7 +6,7 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:33:26 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/07 18:12:35 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/07 20:20:51 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	signal_handler(int signum)
 	if (signum == SIGUSR2)
 		g_state.accumulator |= 1;
 	g_state.count++;
-
 	if (g_state.count == 8)
 	{
 		if (g_state.accumulator == 0)
@@ -39,17 +38,9 @@ void	signal_handler(int signum)
 
 int	main(void)
 {
-	struct sigaction	signal_received;
-
 	ft_printf("Server's PID: %d\n", getpid());
-	signal_received.sa_handler = signal_handler;
-	signal_received.sa_flags = 0;
-	sigemptyset(&signal_received.sa_mask);
-	sigaddset(&signal_received.sa_mask, SIGUSR1);
-	sigaddset(&signal_received.sa_mask, SIGUSR2);
-	if (sigaction(SIGUSR1, &signal_received, NULL) == -1
-		|| sigaction(SIGUSR2, &signal_received, NULL) == -1)
-		handle_error("Error: signal configuration");
+	my_signal(SIGUSR1, signal_handler, 0);
+	my_signal(SIGUSR2, signal_handler, 0);
 	while (1)
 		pause();
 }

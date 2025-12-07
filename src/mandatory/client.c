@@ -6,13 +6,13 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:58:06 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/07 18:17:50 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/07 19:55:52 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	ft_send_bits(int pid, char i)
+void	ft_send_bits(pid_t pid, char i)
 {
 	int	bit;
 
@@ -20,15 +20,15 @@ void	ft_send_bits(int pid, char i)
 	while (bit >= 0)
 	{
 		if ((i >> bit) & 1)
-			kill(pid, SIGUSR2);
+			my_kill(pid, SIGUSR2);
 		else
-			kill(pid, SIGUSR1);
+			my_kill(pid, SIGUSR1);
 		usleep(UWAIT);
 		bit--;
 	}
 }
 
-void	send_message(int pid, const char *message)
+void	send_message(pid_t pid, const char *message)
 {
 	int	i;
 
@@ -42,8 +42,8 @@ void	send_message(int pid, const char *message)
 
 int	main(int argc, char **argv)
 {
-	int		pid;
-	char	*message;
+	pid_t		pid;
+	char		*message;
 
 	if (argc != 3)
 		handle_error("Error: more or less than three arguments\n");
