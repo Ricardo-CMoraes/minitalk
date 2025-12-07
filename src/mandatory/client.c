@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:58:06 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/06 19:03:17 by rida-cos         ###   ########.fr       */
+/*   Updated: 2025/12/07 18:17:50 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_send_bits(int pid, char i)
 	}
 }
 
-void	send_message(int pid, char *message)
+void	send_message(int pid, const char *message)
 {
 	int	i;
 
@@ -52,5 +52,6 @@ int	main(int argc, char **argv)
 		handle_error("Error: wrong pid\n");
 	message = argv[2];
 	send_message(pid, message);
+	send_message(pid, "\n");
 	return (0);
 }

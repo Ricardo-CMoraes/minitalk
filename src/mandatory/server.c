@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:33:26 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/06 19:00:31 by rida-cos         ###   ########.fr       */
+/*   Updated: 2025/12/07 18:12:35 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ int	main(void)
 
 	ft_printf("Server's PID: %d\n", getpid());
 	signal_received.sa_handler = signal_handler;
+	signal_received.sa_flags = 0;
 	sigemptyset(&signal_received.sa_mask);
 	sigaddset(&signal_received.sa_mask, SIGUSR1);
 	sigaddset(&signal_received.sa_mask, SIGUSR2);
-	signal_received.sa_flags = 0;
-	sigaction(SIGUSR1, &signal_received, NULL);
-	sigaction(SIGUSR2, &signal_received, NULL);
+	if (sigaction(SIGUSR1, &signal_received, NULL) == -1
+		|| sigaction(SIGUSR2, &signal_received, NULL) == -1)
+		handle_error("Error: signal configuration");
 	while (1)
 		pause();
 }

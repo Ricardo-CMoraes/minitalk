@@ -6,7 +6,7 @@
 /*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:58:13 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/07 16:10:31 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/07 19:46:57 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ typedef struct s_state
 {
 	int	accumulator;
 	int	count;
+	pid_t pid;
 }	t_state;
 
-int		convert_to_integer(char	*b);
 void	handle_error(const char *msg);
 void	send_bit(int pid, int signal);
+void	my_signal(int sig, void *handler, int use_siginfo);
+void	my_kill(pid_t pid, int signum);
 
 #endif

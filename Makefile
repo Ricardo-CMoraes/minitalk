@@ -12,10 +12,10 @@ OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 SRC_SERVER = src/mandatory/server.c src/utils.c
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
 
-SRC_CLIENT_BONUS = src/bonus/client_bonus.c src/bonus/utils_bonus.c
+SRC_CLIENT_BONUS = src/bonus/client_bonus.c src/utils.c
 OBJ_CLIENT_BONUS = $(SRC_CLIENT_BONUS:.c=.o)
 
-SRC_SERVER_BONUS = src/bonus/server_bonus.c src/bonus/utils_bonus.c
+SRC_SERVER_BONUS = src/bonus/server_bonus.c src/utils.c
 OBJ_SERVER_BONUS = $(SRC_SERVER_BONUS:.c=.o)
 
 LIBFT_DIR = libft
