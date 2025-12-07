@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 11:58:13 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/06 19:03:26 by rida-cos         ###   ########.fr       */
+/*   Updated: 2025/12/07 16:10:31 by rdcm             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <signal.h>
 
-# define UWAIT 150
+# define UWAIT 250
 
 typedef struct s_state
 {
