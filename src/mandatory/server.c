@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdcm <rdcm@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rida-cos <rida-cos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:33:26 by rida-cos          #+#    #+#             */
-/*   Updated: 2025/12/07 20:20:51 by rdcm             ###   ########.fr       */
+/*   Updated: 2025/12/08 20:03:48 by rida-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static t_state	g_state = {0};
+static t_state	g_state;
 
 void	signal_handler(int signum)
 {
@@ -39,6 +39,7 @@ void	signal_handler(int signum)
 int	main(void)
 {
 	ft_printf("Server's PID: %d\n", getpid());
+	ft_memset(&g_state, 0, sizeof(g_state));
 	my_signal(SIGUSR1, signal_handler, 0);
 	my_signal(SIGUSR2, signal_handler, 0);
 	while (1)
